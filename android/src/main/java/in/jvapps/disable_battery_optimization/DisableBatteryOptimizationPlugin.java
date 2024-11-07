@@ -274,28 +274,14 @@ public class DisableBatteryOptimizationPlugin implements FlutterPlugin, Activity
             @NonNull final BatteryOptimizationUtil.OnBatteryOptimizationCanceled negativeCallback,
             @NonNull final BatteryOptimizationUtil.OnBatteryOptimizationNotAvailable notAvailableCallback) {
         if (!BatteryOptimizationUtil.isIgnoringBatteryOptimizations(mContext)) {
-
-            BatteryOptimizationUtil.showBatteryOptimizationDialog(
-                mActivity,
-                KillerManager.Actions.ACTION_AUTOSTART,
-                autoStartTitle,
-                autoStartMessage,
-                () -> {
-                    final Intent ignoreBatteryOptimizationsIntent = BatteryOptimizationUtil.getIgnoreBatteryOptimizationsIntent(mContext);
-                    if (ignoreBatteryOptimizationsIntent != null) {
-                        mContext.startActivity(ignoreBatteryOptimizationsIntent);
-                        positiveCallback.onBatteryOptimizationAccepted();
-                    } else {
-                        Log.i(TAG, "Can't ignore the battery optimization as the intent is null");
-                        negativeCallback.onBatteryOptimizationCanceled();
-                    }
-                },
-                negativeCallback,
-                notAvailableCallback
-            );
-            
+            final Intent ignoreBatteryOptimizationsIntent = BatteryOptimizationUtil.getIgnoreBatteryOptimizationsIntent(mContext);
+            if (ignoreBatteryOptimizationsIntent != null) {
+                mContext.startActivity(ignoreBatteryOptimizationsIntent);
+                positiveCallback.onBatteryOptimizationAccepted();
+            } else {
+                negativeCallback.onBatteryOptimizationCanceled();
+            }
         } else {
-            Log.i(TAG, "Battery optimization is already disabled");
             positiveCallback.onBatteryOptimizationAccepted();
         }
     }

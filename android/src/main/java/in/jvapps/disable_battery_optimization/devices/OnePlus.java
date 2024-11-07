@@ -60,9 +60,6 @@ public class OnePlus extends DeviceAbstract {
                 break;
             }
         }
-        if (intent == null) {
-            intent = SystemUtils.getAppInfoIntent(context.getPackageName());
-        }
         return intent;
     }
 
