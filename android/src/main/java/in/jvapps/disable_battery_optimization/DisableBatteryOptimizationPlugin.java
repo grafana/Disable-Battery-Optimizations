@@ -273,16 +273,12 @@ public class DisableBatteryOptimizationPlugin implements FlutterPlugin, Activity
             @NonNull final BatteryOptimizationUtil.OnBatteryOptimizationAccepted positiveCallback,
             @NonNull final BatteryOptimizationUtil.OnBatteryOptimizationCanceled negativeCallback,
             @NonNull final BatteryOptimizationUtil.OnBatteryOptimizationNotAvailable notAvailableCallback) {
-        if (!BatteryOptimizationUtil.isIgnoringBatteryOptimizations(mContext)) {
-            final Intent ignoreBatteryOptimizationsIntent = BatteryOptimizationUtil.getIgnoreBatteryOptimizationsIntent(mContext);
-            if (ignoreBatteryOptimizationsIntent != null) {
-                mContext.startActivity(ignoreBatteryOptimizationsIntent);
-                positiveCallback.onBatteryOptimizationAccepted();
-            } else {
-                negativeCallback.onBatteryOptimizationCanceled();
-            }
-        } else {
+        final Intent ignoreBatteryOptimizationsIntent = BatteryOptimizationUtil.getIgnoreBatteryOptimizationsIntent(mContext);
+        if (ignoreBatteryOptimizationsIntent != null) {
+            mContext.startActivity(ignoreBatteryOptimizationsIntent);
             positiveCallback.onBatteryOptimizationAccepted();
+        } else {
+            negativeCallback.onBatteryOptimizationCanceled();
         }
     }
 
@@ -319,9 +315,13 @@ public class DisableBatteryOptimizationPlugin implements FlutterPlugin, Activity
     }
 
     public boolean getManBatteryOptimization() {
-        boolean isManBatteryAvailable = KillerManager.isActionAvailable(mContext, KillerManager.Actions.ACTION_POWERSAVING);
-        PrefUtils.saveToPrefs(mContext, PrefKeys.IS_MAN_BATTERY_OPTIMIZATION_ACCEPTED, !isManBatteryAvailable);
-        return !isManBatteryAvailable;
+        if (PrefUtils.hasKey(mContext, PrefKeys.IS_MAN_BATTERY_OPTIMIZATION_ACCEPTED)) {
+            return (boolean) PrefUtils.getFromPrefs(mContext, PrefKeys.IS_MAN_BATTERY_OPTIMIZATION_ACCEPTED, false);
+        } else {
+            boolean isManBatteryAvailable = KillerManager.isActionAvailable(mContext, KillerManager.Actions.ACTION_POWERSAVING);
+            PrefUtils.saveToPrefs(mContext, PrefKeys.IS_MAN_BATTERY_OPTIMIZATION_ACCEPTED, !isManBatteryAvailable);
+            return !isManBatteryAvailable;
+        }
     }
 
     public void setManAutoStart(boolean val) {
@@ -329,8 +329,12 @@ public class DisableBatteryOptimizationPlugin implements FlutterPlugin, Activity
     }
 
     public boolean getManAutoStart() {
-        boolean isAutoStartAvailable = KillerManager.isActionAvailable(mContext, KillerManager.Actions.ACTION_AUTOSTART);
-        PrefUtils.saveToPrefs(mContext, PrefKeys.IS_MAN_AUTO_START_ACCEPTED, !isAutoStartAvailable);
-        return !isAutoStartAvailable;
+        if (PrefUtils.hasKey(mContext, PrefKeys.IS_MAN_AUTO_START_ACCEPTED)) {
+            return (boolean) PrefUtils.getFromPrefs(mContext, PrefKeys.IS_MAN_AUTO_START_ACCEPTED, false);
+        } else {
+            boolean isAutoStartAvailable = KillerManager.isActionAvailable(mContext, KillerManager.Actions.ACTION_AUTOSTART);
+            PrefUtils.saveToPrefs(mContext, PrefKeys.IS_MAN_AUTO_START_ACCEPTED, !isAutoStartAvailable);
+            return !isAutoStartAvailable;
+        }
     }
 }

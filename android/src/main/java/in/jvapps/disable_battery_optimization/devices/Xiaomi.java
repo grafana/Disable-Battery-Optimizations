@@ -3,6 +3,7 @@ package in.jvapps.disable_battery_optimization.devices;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.os.Build;
 
 import in.jvapps.disable_battery_optimization.R;
@@ -64,13 +65,19 @@ public class Xiaomi extends DeviceAbstract {
             if (ActionsUtils.isIntentAvailable(context, component)) {
                 intent = ActionsUtils.createIntent();
                 intent.setComponent(component);
+                intent.putExtra("package_name", context.getPackageName());
+                intent.putExtra("package_label", getApplicationName(context));
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 break;
             }
         }
-        if (intent == null && isActionAutoStartAvailable(context)) {
-            intent = SystemUtils.getAppInfoIntent(context.getPackageName());
-        }
         return intent;
+    }
+
+    private String getApplicationName(Context context) {
+        ApplicationInfo applicationInfo = context.getApplicationInfo();
+        int stringId = applicationInfo.labelRes;
+        return stringId == 0 ? applicationInfo.nonLocalizedLabel.toString() : context.getString(stringId);
     }
 
     @Override
