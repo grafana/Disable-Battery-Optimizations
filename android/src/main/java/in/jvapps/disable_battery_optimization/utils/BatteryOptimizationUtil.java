@@ -15,12 +15,12 @@ import androidx.annotation.Nullable;
 import in.jvapps.disable_battery_optimization.managers.KillerManager;
 import in.jvapps.disable_battery_optimization.ui.DialogKillerManagerBuilder;
 
-
 public class BatteryOptimizationUtil {
 
     public static Intent getAppSettingsIntent(Context context) {
         Intent intent = new Intent("android.settings.APPLICATION_DETAILS_SETTINGS");
         intent.setData(Uri.fromParts("package", context.getApplicationContext().getPackageName(), null));
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         return intent;
     }
 
@@ -44,7 +44,13 @@ public class BatteryOptimizationUtil {
                 context.getApplicationContext().getPackageName();
         @SuppressLint("BatteryLife") Intent intent = new Intent(ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS, Uri.parse(sb));
         intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
-        return intent.resolveActivity(context.getPackageManager()) == null ? getAppSettingsIntent(context) : intent;
+
+        Bool isIgnoringOptimizations = isIgnoringBatteryOptimizations(context);
+        if (isIgnoringOptimizations || intent.resolveActivity(context.getPackageManager()) == null) {
+            return getAppSettingsIntent(context);
+        } else {
+            return intent;
+        }
     }
 
     public static void showBatteryOptimizationDialog(
