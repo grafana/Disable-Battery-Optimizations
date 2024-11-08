@@ -45,7 +45,7 @@ public class BatteryOptimizationUtil {
         @SuppressLint("BatteryLife") Intent intent = new Intent(ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS, Uri.parse(sb));
         intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
 
-        Bool isIgnoringOptimizations = isIgnoringBatteryOptimizations(context);
+        boolean isIgnoringOptimizations = isIgnoringBatteryOptimizations(context);
         if (isIgnoringOptimizations || intent.resolveActivity(context.getPackageManager()) == null) {
             return getAppSettingsIntent(context);
         } else {
