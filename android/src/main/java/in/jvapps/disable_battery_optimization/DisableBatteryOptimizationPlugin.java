@@ -174,13 +174,19 @@ public class DisableBatteryOptimizationPlugin implements FlutterPlugin, Activity
                     result.error("E100", "Error during processing", ex);
                 }
                 break;
-            case "isAutoStartEnabled":
+            case "didCheckAutoStart":
                 result.success(getManAutoStart());
+                break;
+            case "isAutoStartAvailable":
+                result.success(KillerManager.isActionAvailable(mContext, KillerManager.Actions.ACTION_AUTOSTART));
+                break;
+            case "isManufacturerBatteryOptimizationAvailable":
+                result.success(KillerManager.isActionAvailable(mContext, KillerManager.Actions.ACTION_POWERSAVING));
                 break;
             case "isBatteryOptimizationDisabled":
                 result.success(BatteryOptimizationUtil.isIgnoringBatteryOptimizations(mContext));
                 break;
-            case "isManBatteryOptimizationDisabled":
+            case "didCheckManufacturerBatteryOptimization":
                 result.success(getManBatteryOptimization());
                 break;
             case "isAllOptimizationsDisabled":
