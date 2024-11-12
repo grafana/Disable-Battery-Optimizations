@@ -92,7 +92,6 @@ public class DisableBatteryOptimizationPlugin implements FlutterPlugin, Activity
                             setManAutoStart(true);
                             result.success("enabled");
                         }, () -> {
-                            setManAutoStart(false);
                             result.success("disabled");
                         }, () -> {
                             result.success("notavailable");
