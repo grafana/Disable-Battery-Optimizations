@@ -1,0 +1,1 @@
+/Users/salvatoregiordano/development/Disable-Battery-Optimizations/example/build/app/intermediates/cxx/Debug/4t51534h/obj/x86
