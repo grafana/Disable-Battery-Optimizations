@@ -1,0 +1,2 @@
+/Users/salvatoregiordano/development/Disable-Battery-Optimizations/example/android/app/.cxx/Debug/4o721k54/armeabi-v7a/CMakeFiles/rebuild_cache.dir
+/Users/salvatoregiordano/development/Disable-Battery-Optimizations/example/android/app/.cxx/Debug/4o721k54/armeabi-v7a/CMakeFiles/edit_cache.dir
