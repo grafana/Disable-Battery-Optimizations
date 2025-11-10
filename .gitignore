@@ -39,6 +39,7 @@ pubscpec.lock
 **/android/**/GeneratedPluginRegistrant.java
 **/android/localLib/
 **/build/*
+**/.cxx/
 android/.idea/
 
 # iOS/XCode related
