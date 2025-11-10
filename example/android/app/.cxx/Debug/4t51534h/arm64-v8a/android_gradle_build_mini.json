@@ -1,0 +1,20 @@
+{
+  "buildFiles": [
+    "/Users/salvatoregiordano/development/flutter/packages/flutter_tools/gradle/src/main/groovy/CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/Users/salvatoregiordano/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+      "-C",
+      "/Users/salvatoregiordano/development/Disable-Battery-Optimizations/example/android/app/.cxx/Debug/4t51534h/arm64-v8a",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/Users/salvatoregiordano/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+    "-C",
+    "/Users/salvatoregiordano/development/Disable-Battery-Optimizations/example/android/app/.cxx/Debug/4t51534h/arm64-v8a",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {}
+}
